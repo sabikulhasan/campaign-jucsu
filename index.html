@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zia Uddin Ayan | JUCSU Election Campaign</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFFAF5; /* A pale, warm background */
+            color: #333;
+        }
+        .highlight {
+            color: #F97316; /* Vibrant Orange */
+        }
+        .bg-highlight {
+            background-color: #F97316;
+        }
+        .border-highlight {
+            border-color: #F97316;
+        }
+        .section {
+            padding: 6rem 1.5rem;
+        }
+        .section-title {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        .section-title span {
+            border-bottom: 4px solid #F97316;
+            padding-bottom: 0.5rem;
+        }
+        /* Add a subtle animation for sections */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Loader styles */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 8px solid #F97316;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Custom modal for messages */
+        .custom-modal-overlay {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0, 0, 0, 0.6);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              z-index: 1000;
+              padding: 1rem;
+        }
+        .custom-modal {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50 shadow-md">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#hero" class="text-xl font-bold text-gray-800">Zia Uddin <span class="highlight">Ayan</span></a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-600 hover:text-orange-600 transition duration-300">About</a>
+                <a href="#manifesto" class="text-gray-600 hover:text-orange-600 transition duration-300">Manifesto</a>
+                <a href="#gallery" class="text-gray-600 hover:text-orange-600 transition duration-300">Gallery</a>
+                <a href="#contact" class="text-gray-600 hover:text-orange-600 transition duration-300">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#about" class="block py-2 px-6 text-sm text-gray-700 hover:bg-orange-50">About</a>
+            <a href="#manifesto" class="block py-2 px-6 text-sm text-gray-700 hover:bg-orange-50">Manifesto</a>
+            <a href="#gallery" class="block py-2 px-6 text-sm text-gray-700 hover:bg-orange-50">Gallery</a>
+            <a href="#contact" class="block py-2 px-6 text-sm text-gray-700 hover:bg-orange-50">Contact</a>
+        </div>
+    </header>
+
+    <!-- 1. Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center bg-white">
+        <div class="container mx-auto px-6 pt-24 md:pt-0">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <!-- Left Column: Text & Countdown -->
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 leading-tight">
+                        ZIA UDDIN <br><span class="highlight">AYAN</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-600 mt-4">For a Better, Brighter JAHANGIRNAGAR UNIVERSITY</p>
+                    
+                    <!-- Countdown Timer -->
+                    <div class="mt-10">
+                        <h3 class="text-lg font-semibold text-gray-700 uppercase tracking-wider">Election Day</h3>
+                        <div id="countdown" class="flex justify-center md:justify-start gap-4 md:gap-8 mt-4 text-center">
+                            <div>
+                                <div id="days" class="text-4xl md:text-5xl font-bold highlight">00</div>
+                                <div class="text-sm text-gray-500">Days</div>
+                            </div>
+                            <div>
+                                <div id="hours" class="text-4xl md:text-5xl font-bold highlight">00</div>
+                                <div class="text-sm text-gray-500">Hours</div>
+                            </div>
+                            <div>
+                                <div id="minutes" class="text-4xl md:text-5xl font-bold highlight">00</div>
+                                <div class="text-sm text-gray-500">Minutes</div>
+                            </div>
+                            <div>
+                                <div id="seconds" class="text-4xl md:text-5xl font-bold highlight">00</div>
+                                <div class="text-sm text-gray-500">Seconds</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Image -->
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-72 h-72 md:w-96 md:h-96">
+                        <div class="absolute inset-0 bg-orange-200 rounded-full transform rotate-6"></div>
+                        <img src="https://scontent.fdac138-2.fna.fbcdn.net/v/t39.30808-6/536159677_122096048312994690_7443021315054531542_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=oHgnbVUjnW4Q7kNvwHq35NG&_nc_oc=AdlGckpx8NFObj7tJED_I-JHRgZ0zwz7xWv0upztIOvydMFVvSR1EqpvCF6i1mlZ_Z8&_nc_zt=23&_nc_ht=scontent.fdac138-2.fna&_nc_gid=3XDfWzpPDYTw8M1HF7PBvQ&oh=00_AfYTTSJLuekaR7T-XOt3jKzuvQEpUso8nIyBNn5LSYnphA&oe=68C39AF6" alt="Zia Uddin Ayan" class="relative object-cover w-full h-full rounded-full shadow-2xl border-4 border-white">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. About Section -->
+    <section id="about" class="section fade-in">
+        <div class="container mx-auto">
+            <h2 class="section-title"><span>About Me</span></h2>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-2/5">
+                    <img src="https://scontent.fdac138-1.fna.fbcdn.net/v/t39.30808-6/540672841_122099427536994690_7799540603804360173_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=HF418xF3ZhYQ7kNvwF2O4e-&_nc_oc=Adni0lU5x1Leb7F2Z9V9Hi2SJLJq1WoeKtQcLOWTgDrq7bFLQQu5rkR-r3CG13ZFgtQ&_nc_zt=23&_nc_ht=scontent.fdac138-1.fna&_nc_gid=XqIuwgVRmqoh7qHFfV8R3A&oh=00_AfZKWMRKNFYa3h9t32kiZKZeKCHFALe2airzXtP-ZYJt-g&oe=68C3C005" alt="Zia Uddin Ayan Campaign Poster" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="md:w-3/5 text-lg text-gray-600 leading-relaxed">
+                    <p class="mb-4">
+                        My name is Zia Uddin Ayan, and I am a proud student of Jahangirnagar University. My journey on this beautiful campus has been one of growth, learning, and forging deep connections within our student community. From my first day here, I've been inspired by the vibrant spirit and intellectual curiosity that defines us.
+                    </p>
+                    <p class="mb-4">
+                        Through active participation in various student organizations and cultural events, I have gained a firsthand understanding of our collective challenges and aspirations. I am running for JUCSU because I believe in the power of student unity and effective representation. My vision is to build a more inclusive, dynamic, and supportive campus where every student has the opportunity to thrive. I am committed to being your voice, championing our rights, and working tirelessly for a brighter future for all of us at JU.
+                    </p>
+                    <a href="#contact" class="inline-block bg-highlight text-white font-bold py-3 px-8 rounded-lg mt-4 hover:bg-orange-700 transition duration-300">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Manifesto Section -->
+    <section id="manifesto" class="section bg-white fade-in">
+        <div class="container mx-auto">
+            <h2 class="section-title"><span>My Manifesto</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card: Academic Reforms -->
+                <div class="bg-orange-50 p-8 rounded-xl shadow-lg flex flex-col justify-between hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="bg-highlight text-white p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">Academic Reforms</h3>
+                        </div>
+                        <ul class="manifesto-points space-y-3 text-gray-600 list-disc list-inside">
+                            <li>Introducing quality improvement tests.</li>
+                            <li>Final exam revaluation system.</li>
+                            <li>Timely results as per policy.</li>
+                            <li>Change in teacher recruitment policy.</li>
+                            <li>Teacher evaluation system introduced.</li>
+                            <li>Increasing allocation for research.</li>
+                            <li>Preventing student humiliation.</li>
+                        </ul>
+                        <div class="manifesto-result mt-4 text-gray-700 text-sm hidden bg-orange-100 p-3 rounded-md border-l-4 border-orange-500"></div>
+                    </div>
+                    <button class="manifesto-expander mt-6 text-sm font-semibold text-orange-600 hover:text-orange-800 self-start">✨ Expand on this</button>
+                </div>
+
+                <!-- Other cards... -->
+                <div class="bg-orange-50 p-8 rounded-xl shadow-lg flex flex-col justify-between hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div>
+                        <div class="flex items-center gap-4 mb-4">
+                           <div class="bg-highlight text-white p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                           </div>
+                           <h3 class="text-2xl font-bold text-gray-800">Automation</h3>
+                        </div>
+                       <ul class="manifesto-points space-y-3 text-gray-600 list-disc list-inside">
+                            <li>Introducing automation across campus systems.</li>
+                            <li>Creating a unique academic profile for each student.</li>
+                        </ul>
+                        <div class="manifesto-result mt-4 text-gray-700 text-sm hidden bg-orange-100 p-3 rounded-md border-l-4 border-orange-500"></div>
+                    </div>
+                    <button class="manifesto-expander mt-6 text-sm font-semibold text-orange-600 hover:text-orange-800 self-start">✨ Expand on this</button>
+                </div>
+
+                 <div class="bg-orange-50 p-8 rounded-xl shadow-lg flex flex-col justify-between hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                       <div>
+                         <div class="flex items-center gap-4 mb-4">
+                            <div class="bg-highlight text-white p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16v4m-2-2h4m5 10v4m-2-2h4"/></svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">Food Arrangements</h3>
+                        </div>
+                       <ul class="manifesto-points space-y-3 text-gray-600 list-disc list-inside">
+                            <li>Improving hall dining and cafeteria facilities.</li>
+                            <li>Arranging proper and diverse food options.</li>
+                        </ul>
+                        <div class="manifesto-result mt-4 text-gray-700 text-sm hidden bg-orange-100 p-3 rounded-md border-l-4 border-orange-500"></div>
+                    </div>
+                    <button class="manifesto-expander mt-6 text-sm font-semibold text-orange-600 hover:text-orange-800 self-start">✨ Expand on this</button>
+                </div>
+                
+                 <div class="bg-orange-50 p-8 rounded-xl shadow-lg flex flex-col justify-between hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                       <div>
+                         <div class="flex items-center gap-4 mb-4">
+                           <div class="bg-highlight text-white p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h10a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.737 11l-.262-2.813a2 2 0 012.228-2.053L16 6l-.262 2.813m0 0l2.228 2.053a2 2 0 01-2.228 2.053L8 16" /></svg>
+                           </div>
+                           <h3 class="text-2xl font-bold text-gray-800">Development & Autonomy</h3>
+                        </div>
+                       <ul class="manifesto-points space-y-3 text-gray-600 list-disc list-inside">
+                            <li>Establishing adequate medical centers.</li>
+                            <li>Creating an advanced 24-hour pharmacy.</li>
+                            <li>Increasing the number of academics.</li>
+                        </ul>
+                        <div class="manifesto-result mt-4 text-gray-700 text-sm hidden bg-orange-100 p-3 rounded-md border-l-4 border-orange-500"></div>
+                    </div>
+                    <button class="manifesto-expander mt-6 text-sm font-semibold text-orange-600 hover:text-orange-800 self-start">✨ Expand on this</button>
+                </div>
+
+                <div class="bg-orange-50 p-8 rounded-xl shadow-lg flex flex-col justify-between hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div>
+                         <div class="flex items-center gap-4 mb-4">
+                           <div class="bg-highlight text-white p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                           </div>
+                           <h3 class="text-2xl font-bold text-gray-800">Green System Reforms</h3>
+                        </div>
+                       <ul class="manifesto-points space-y-3 text-gray-600 list-disc list-inside">
+                            <li>Increasing the number of buses for students.</li>
+                            <li>Launching a GPS tracker app for buses.</li>
+                            <li>Launching transportation on new routes.</li>
+                            <li>Creating an efficient internal transport system.</li>
+                        </ul>
+                        <div class="manifesto-result mt-4 text-gray-700 text-sm hidden bg-orange-100 p-3 rounded-md border-l-4 border-orange-500"></div>
+                    </div>
+                   <button class="manifesto-expander mt-6 text-sm font-semibold text-orange-600 hover:text-orange-800 self-start">✨ Expand on this</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Gallery Section -->
+    <section id="gallery" class="section fade-in">
+        <div class="container mx-auto">
+            <h2 class="section-title"><span>Campaign Gallery</span></h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="overflow-hidden rounded-lg shadow-lg aspect-w-1 aspect-h-1">
+                    <img src="https://scontent.fdac138-1.fna.fbcdn.net/v/t39.30808-6/536280722_122096503472994690_9111720791884980858_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=uiaBywxgWh4Q7kNvwEuAHdB&_nc_oc=AdnsOLV6yPD02e53-u6u0nZChWwHOYkdgX828USquN5htL7bIwdmgAwYB9pRjs5A_T0&_nc_zt=23&_nc_ht=scontent.fdac138-1.fna&_nc_gid=3NIIWIdtkLtU-jUJlWTUcg&oh=00_AfaPFdVRZhmMy_1GpoX4clud4uvZ9humwhQ5xi8OYCGBng&oe=68C3B15F" alt="Event Photo" class="w-full h-full object-cover transform hover:scale-110 transition duration-500">
+                </div>
+                <div class="overflow-hidden rounded-lg shadow-lg aspect-w-1 aspect-h-1">
+                    <img src="https://scontent.fdac138-1.fna.fbcdn.net/v/t39.30808-6/527874595_2236424453479929_4672936269888940744_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=0yZ8nLnkRK8Q7kNvwGJ9N10&_nc_oc=AdnQKFAUGhmJCTbtUoDQS--Kga1QWq8fgmDHF5jg8zv5hhHGj2IZ-VyHNwUcCttEbAU&_nc_zt=23&_nc_ht=scontent.fdac138-1.fna&_nc_gid=yiG5sZoGjl496jVsba1u7g&oh=00_AfYKxdX9Fc6wn5WSqBEEqZUBFPtqw_c-fdmf3f2ryk-fdA&oe=68C3945F" alt="Campaign Rally" class="w-full h-full object-cover transform hover:scale-110 transition duration-500">
+                </div>
+                <div class="overflow-hidden rounded-lg shadow-lg aspect-w-1 aspect-h-1">
+                    <img src="https://scontent.fdac138-1.fna.fbcdn.net/v/t39.30808-6/544794806_2265360417252999_5320170309203662873_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Y27ybSnbploQ7kNvwEthO9w&_nc_oc=AdkGec7GL0nYHOmVNnflJzsrRMYANgxw2I9j8USPbOZ3iHfo3oponqL0hoUb0dCACG8&_nc_zt=23&_nc_ht=scontent.fdac138-1.fna&_nc_gid=DvVMYugn6CH-10LsyljfOw&oh=00_AfYQeqcmKtNe6ZQIEI1VPgbEjm0Pp5eZmCsMFnfIBOsM_Q&oe=68C3A1CF" alt="Campaign Meeting" class="w-full h-full object-cover transform hover:scale-110 transition duration-500">
+                </div>
+                <div class="overflow-hidden rounded-lg shadow-lg aspect-w-1 aspect-h-1">
+                    <img src="https://scontent.fdac138-1.fna.fbcdn.net/v/t39.30808-6/530422355_2241010266354681_8847141046457062275_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_ohc=ZlcUhRwddUMQ7kNvwHk1C-5&_nc_oc=AdkYsR4qKocXku7fV0YnkIKuM8teQw80Iga_7vAJ0EqcWueahUs5Vs179d2cX0ouQVY&_nc_zt=23&_nc_ht=scontent.fdac138-1.fna&_nc_gid=FSpcWHSOInXUzppO6gyt6w&oh=00_AfYJTB9V2EJcnfpWDL054r2yWi5UybtlVrQiLQpZaHAYtg&oe=68C39090" alt="Meeting with Students" class="w-full h-full object-cover transform hover:scale-110 transition duration-500">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Contact Section -->
+    <section id="contact" class="section bg-white fade-in">
+        <div class="container mx-auto">
+            <h2 class="section-title"><span>Get In Touch</span></h2>
+            <div class="max-w-2xl mx-auto">
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="sr-only">Name</label>
+                        <input type="text" name="name" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Your Name" required>
+                    </div>
+                    <div>
+                        <label for="email" class="sr-only">Email</label>
+                        <input type="email" name="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Your Email" required>
+                    </div>
+                    <div class="relative">
+                        <label for="message" class="sr-only">Message</label>
+                        <textarea name="message" id="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Write your message or some keywords..." required></textarea>
+                         <button type="button" id="draft-message-btn" class="absolute bottom-3 right-3 bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1.5 rounded-md hover:bg-orange-200 transition-colors">✨ Draft with AI</button>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-highlight text-white font-bold py-3 px-10 rounded-lg hover:bg-orange-700 transition duration-300">Send Message</button>
+                    </div>
+                </form>
+
+                <!-- Social Media Icons -->
+                <div class="mt-12 text-center">
+                    <p class="text-gray-600 mb-4">Follow my journey or get in touch:</p>
+                    <div class="flex justify-center space-x-6">
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/share/1FcU1sHvwM/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-orange-600 transition">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                        </a>
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/8801617590529" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-orange-600 transition">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.35 3.43 16.84L2 22L7.32 20.61C8.75 21.33 10.35 21.72 12.04 21.72C17.5 21.72 21.95 17.27 21.95 11.81C21.95 6.35 17.5 2 12.04 2ZM12.04 20.13C10.56 20.13 9.13 19.79 7.89 19.14L7.54 18.94L4.44 19.79L5.3 16.78L5.08 16.42C4.36 15.06 4.03 13.53 4.03 11.91C4.03 7.55 7.63 3.95 12.04 3.95C16.45 3.95 20.05 7.55 20.05 11.91C20.05 16.27 16.45 20.13 12.04 20.13ZM17.37 14.51C17.12 14.39 15.95 13.85 15.72 13.77C15.49 13.69 15.33 13.65 15.16 13.9C15 14.15 14.5 14.73 14.34 14.9C14.18 15.07 14.01 15.09 13.76 14.97C13.51 14.85 12.6 14.56 11.51 13.59C10.66 12.86 10.1 12.02 9.94 11.77C9.78 11.52 9.89 11.4 10.03 11.26C10.15 11.14 10.29 10.95 10.42 10.8C10.55 10.65 10.61 10.53 10.74 10.3C10.87 10.07 10.8 9.89 10.72 9.73C10.64 9.57 10.1 8.41 9.89 7.93C9.69 7.46 9.48 7.52 9.33 7.51H9.01C8.84 7.51 8.58 7.59 8.35 7.84C8.12 8.09 7.47 8.67 7.47 9.89C7.47 11.11 8.38 12.27 8.54 12.47C8.7 12.67 10.14 14.98 12.47 15.89C14.8 16.8 14.8 16.52 15.19 16.48C15.58 16.44 16.74 15.81 16.95 15.22C17.16 14.63 17.16 14.15 17.09 14.03C17.02 13.91 16.88 13.85 16.71 13.77C16.54 13.69 17.62 14.63 17.37 14.51Z"/></svg>
+                        </a>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-4">WhatsApp: +880 1617-590529</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Campaign for Zia Uddin Ayan. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Loader Overlay -->
+    <div id="loader-overlay" class="loader-overlay hidden">
+        <div class="loader"></div>
+    </div>
+    
+    <!-- Message Modal -->
+    <div id="message-modal" class="custom-modal-overlay hidden">
+        <div class="custom-modal">
+            <h3 id="modal-title" class="text-xl font-bold mb-4 text-gray-800">Message</h3>
+            <p id="modal-message" class="text-gray-600 mb-6"></p>
+            <button id="modal-close-btn" class="bg-highlight text-white font-bold py-2 px-8 rounded-lg hover:bg-orange-700 transition duration-300">Close</button>
+        </div>
+    </div>
+
+
+    <script>
+        // --- UI Elements & State ---
+        const loaderOverlay = document.getElementById('loader-overlay');
+        const messageModal = document.getElementById('message-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+
+        // --- Helper Functions ---
+        const showLoader = () => loaderOverlay.classList.remove('hidden');
+        const hideLoader = () => loaderOverlay.classList.add('hidden');
+        
+        const showModal = (title, message) => {
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            messageModal.classList.remove('hidden');
+        };
+        
+        const hideModal = () => messageModal.classList.add('hidden');
+        modalCloseBtn.addEventListener('click', hideModal);
+        messageModal.addEventListener('click', (e) => {
+            if (e.target === messageModal) hideModal();
+        });
+
+
+        // --- Gemini API Call ---
+        const callGemini = async (prompt, retries = 3, delay = 1000) => {
+            showLoader();
+            const apiKey = ""; // Canvas will provide this
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (text) {
+                        hideLoader();
+                        return text;
+                    } else {
+                        throw new Error("No content received from API.");
+                    }
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed:`, error);
+                    if (i === retries - 1) {
+                         hideLoader();
+                         showModal("Error", "Failed to get a response from the AI assistant after several attempts. Please try again later.");
+                         return null;
+                    }
+                    await new Promise(res => setTimeout(res, delay * Math.pow(2, i))); // Exponential backoff
+                }
+            }
+        };
+
+        // --- Feature 1: Manifesto Expander ---
+        document.querySelectorAll('.manifesto-expander').forEach(button => {
+            button.addEventListener('click', async (e) => {
+                const card = e.target.closest('div');
+                const pointsList = card.querySelector('.manifesto-points');
+                const resultDiv = card.querySelector('.manifesto-result');
+                
+                const pointsText = Array.from(pointsList.querySelectorAll('li')).map(li => li.textContent).join(', ');
+                const prompt = `As a campaign assistant for JUCSU election candidate Zia Uddin Ayan, briefly expand on these manifesto points in a persuasive and positive tone for students: '${pointsText}'. Keep it concise, professional, and under 50 words.`;
+                
+                const explanation = await callGemini(prompt);
+                
+                if (explanation) {
+                    resultDiv.innerHTML = explanation;
+                    resultDiv.classList.remove('hidden');
+                    e.target.textContent = "Expanded";
+                    e.target.disabled = true;
+                }
+            });
+        });
+        
+        // --- Feature 2: Message Drafter ---
+        const draftBtn = document.getElementById('draft-message-btn');
+        const messageTextarea = document.getElementById('message');
+        
+        draftBtn.addEventListener('click', async () => {
+            const userInput = messageTextarea.value.trim();
+            if (userInput.length < 5) {
+                showModal("Input Needed", "Please provide a few keywords or a rough idea in the message box before using the AI drafter.");
+                return;
+            }
+            
+            const prompt = `You are a supporter of Zia Uddin Ayan for the JUCSU election. Based on the following keywords or ideas, write a short, positive, and encouraging message of support to him: '${userInput}'. The message should be polite and well-structured.`;
+            
+            const draftedMessage = await callGemini(prompt);
+            
+            if (draftedMessage) {
+                messageTextarea.value = draftedMessage;
+            }
+        });
+
+        // --- Contact Form Submission ---
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showModal("Message Sent!", "Thank you for your support. We have received your message.");
+            e.target.reset(); // Clear the form
+        });
+
+
+        // --- Existing JS (Countdown, Menu, Scroll) ---
+        const countdown = () => {
+            const countDate = new Date("September 9, 2025 00:00:00").getTime();
+            const now = new Date().getTime();
+            const gap = countDate - now;
+
+            if (gap < 0) {
+                document.getElementById('countdown').innerHTML = '<div class="text-2xl font-bold text-center w-full">The Election is Today!</div>';
+                return;
+            }
+
+            const second = 1000;
+            const minute = second * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
+
+            const textDay = Math.floor(gap / day);
+            const textHour = Math.floor((gap % day) / hour);
+            const textMinute = Math.floor((gap % hour) / minute);
+            const textSecond = Math.floor((gap % minute) / second);
+
+            document.getElementById('days').innerText = textDay < 10 ? '0' + textDay : textDay;
+            document.getElementById('hours').innerText = textHour < 10 ? '0' + textHour : textHour;
+            document.getElementById('minutes').innerText = textMinute < 10 ? '0' + textMinute : textMinute;
+            document.getElementById('seconds').innerText = textSecond < 10 ? '0' + textSecond : textSecond;
+        };
+        setInterval(countdown, 1000);
+        countdown(); // Initial call
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fade-in animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
+
